@@ -1,7 +1,9 @@
 package com.example.group12.courseregisteration;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
-
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import static org.junit.Assert.*;
 
 /**
