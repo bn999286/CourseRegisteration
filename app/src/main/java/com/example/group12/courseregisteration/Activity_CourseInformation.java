@@ -159,8 +159,8 @@ public class Activity_CourseInformation extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
 
                 }
-                //if student course count is over 5
-                else if(Student_course_count >=5){
+                //if student course count is already 5
+                else if(Student_course_count ==5){
 
                     //report error of over course limit
                     Toast.makeText(getApplicationContext(), "Exceed course limit 5!", Toast.LENGTH_SHORT).show();
