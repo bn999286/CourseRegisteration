@@ -42,6 +42,8 @@ public class Activity_CourseInformation extends AppCompatActivity {
     private String start;
     private String end;
 
+    //count the number of student's courses
+    private int Student_course_count;
 
     //direct to student_id, the child of root Students in Firebase
     final String student_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -95,6 +97,10 @@ public class Activity_CourseInformation extends AppCompatActivity {
                     String d = child.child("Date").getValue(String.class);
                     String s = child.child("TimeStart").getValue(String.class);
                     String e = child.child("TimeEnd").getValue(String.class);
+
+                    //Count the student courses
+                    Student_course_count ++;
+
 
                     DateTime enrolled_time = new DateTime(d, s, e);
                     DateTime new_time = new DateTime(date, start, end);
@@ -150,6 +156,14 @@ public class Activity_CourseInformation extends AppCompatActivity {
 
                     //report error of time conflict
                     Toast.makeText(getApplicationContext(), "Can't register! Time conflict!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
+
+                }
+                //if student course count is over 5
+                else if(Student_course_count >=5){
+
+                    //report error of over course limit
+                    Toast.makeText(getApplicationContext(), "Exceed course limit 5!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
 
                 }
