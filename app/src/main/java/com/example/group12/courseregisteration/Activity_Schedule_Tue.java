@@ -22,6 +22,7 @@ import java.util.LinkedList;
 public class Activity_Schedule_Tue extends AppCompatActivity {
 
     private Button buttonBack;
+    private Button buttonOfferedCourses;
     private Button buttonMon;
     private Button buttonTue;
     private Button buttonWed;
@@ -96,6 +97,7 @@ public class Activity_Schedule_Tue extends AppCompatActivity {
         buttonThu = (Button) findViewById(R.id.buttonThu);
         buttonFri = (Button) findViewById(R.id.buttonFri);
         buttonBack = (Button) findViewById(R.id.buttonBack);
+        buttonOfferedCourses = (Button) findViewById(R.id.buttonOfferedCourses);
 
 
         buttonMon.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +136,12 @@ public class Activity_Schedule_Tue extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Activity_UserProfile.class));
             }
         });
-
+        buttonOfferedCourses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
+            }
+        });
 
     }
 
