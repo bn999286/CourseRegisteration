@@ -37,6 +37,8 @@ public class CourseLimit_UnitTest{
 
     LinkedList<String> list = new LinkedList<>();
 
+    int count;
+
     DatabaseReference mockedDatabaseReference;
 
     @Before
@@ -57,7 +59,7 @@ public class CourseLimit_UnitTest{
     public void Course_limit_Test(){
 
 
-        when(mockedDatabaseReference.child("Students/WtE8Fvl4JRcpBbEGzrIzKZBJ9pi2")).thenReturn(mockedDatabaseReference);
+        when(mockedDatabaseReference.child("Students/WtE8Fvl4JRcpBbEGzrIzKZBJ9pi2/Courses")).thenReturn(mockedDatabaseReference);
 
 
         doAnswer(new Answer<Void>() {
@@ -75,9 +77,11 @@ public class CourseLimit_UnitTest{
 
                     String name = child.child("CourseName").getValue(String.class);
                     list.add(name);
+                    count++;
                 }
 
                 assertEquals(5, list.size());
+                assertEquals(5, count);
 
                 return null;
 
