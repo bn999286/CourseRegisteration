@@ -18,6 +18,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import android.graphics.Color;
 
+/**
+ * The type Activity sign in.
+ * Basic functionality written by Peter and Xao
+ */
 public class Activity_SignIn extends AppCompatActivity {
 
     private Button buttonSignIn;
@@ -25,6 +29,7 @@ public class Activity_SignIn extends AppCompatActivity {
     private EditText editTextPassword;
     private TextView message;
     private FirebaseAuth mAuth;
+    private Button reg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +37,7 @@ public class Activity_SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__sign_in);
 
-
+        //if user is already logged in, go directly to the profile page
         mAuth = FirebaseAuth.getInstance();
 
         if (mAuth.getCurrentUser() != null)
@@ -43,6 +48,7 @@ public class Activity_SignIn extends AppCompatActivity {
 
 
         buttonSignIn = (Button)findViewById(R.id.buttonSignIn);
+        reg = (Button)findViewById(R.id.regButton);
         editTextEmail = (EditText)findViewById(R.id.editTextEmail);
         editTextPassword = (EditText)findViewById(R.id.editTextPassword);
         message = (TextView) findViewById(R.id.Message);
@@ -57,10 +63,20 @@ public class Activity_SignIn extends AppCompatActivity {
             }
         });
 
+        reg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),Register.class));
+            }
+        });
+
 
     }
 
 
+    /**
+     * User sign in.
+     */
     public void userSignIn(){
 
         String email = editTextEmail.getText().toString().trim();
@@ -84,8 +100,7 @@ public class Activity_SignIn extends AppCompatActivity {
 
                         if (task.isSuccessful()) {
                             //finish();
-                            message.setText("Verification success!");
-                            message.setTextColor(Color.GREEN);
+                            Toast.makeText(getApplicationContext(), "Verification Success",Toast.LENGTH_SHORT).show();
                             finish();
                             startActivity(new Intent(getApplicationContext(), Activity_UserProfile.class));
                         }

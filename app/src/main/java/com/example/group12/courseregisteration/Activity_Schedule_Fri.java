@@ -19,6 +19,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.LinkedList;
 
 
+/**
+ * The type Activity schedule fri.
+ * Basic functionality written by Bin He and Chasteen
+ */
 public class Activity_Schedule_Fri extends AppCompatActivity {
 
     private Button buttonBack;

@@ -30,7 +30,8 @@
         <activity android:name=".Activity_Schedule_Wed" />
         <activity android:name=".Activity_Schedule_Thu" />
         <activity android:name=".Activity_Schedule_Fri" />
-        <activity android:name=".ResetPassword"></activity>
+        <activity android:name=".ResetPassword" />
+        <activity android:name=".Register" />
     </application>
 
 </manifest>

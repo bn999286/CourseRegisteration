@@ -17,6 +17,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.LinkedList;
 
+/**
+ * Displays the detailed information for a single course
+ * Basic functionality written by Peter and Xao
+ * Timing conflict detector was written by Bin He and Chasteen
+ * Register course and drop course added by Jon and Mao
+ * Course slots functionality added by Peter and Mao
+ *
+ */
 public class Activity_CourseInformation extends AppCompatActivity {
 
     //text view
@@ -27,6 +35,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
     private TextView TimeEnd;
     private TextView Date;
     private TextView Location;
+    private TextView SlotHolder;
 
     //button
     private Button buttonBack;
@@ -41,13 +50,21 @@ public class Activity_CourseInformation extends AppCompatActivity {
     private String date;
     private String start;
     private String end;
-    private String fee;
+    private String slots;
+
+
 
     //count the number of student's courses
     private int Student_course_count;
 
-    //direct to student_id, the child of root Students in Firebase
+    /**
+     * The Student id.
+     */
+//direct to student_id, the child of root Students in Firebase
     final String student_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    /**
+     * The S ref.
+     */
     DatabaseReference sRef = FirebaseDatabase.getInstance().getReference().child("Students").child(student_id);
 
     //list to store the record of time conflict test
@@ -62,7 +79,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
         //direct to course_id key
         course_id = getIntent().getStringExtra("Course ID");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Courses/" + course_id);
+        final DatabaseReference myRef = database.getReference("Courses/" + course_id);
 
         //retreive course information from firebase and display them on UI
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -75,6 +92,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
                 date = dataSnapshot.child("Date").getValue(String.class);
                 start = dataSnapshot.child("TimeStart").getValue(String.class);
                 end = dataSnapshot.child("TimeEnd").getValue(String.class);
+                slots = dataSnapshot.child("Slots").getValue(String.class);
 
                 fee = dataSnapshot.child("Fee").getValue(String.class);
 
@@ -138,17 +156,43 @@ public class Activity_CourseInformation extends AppCompatActivity {
         });
 
 
-        //Drop button
+        //Drop button, only works if user is actually *in* the course
+        //otherwise sends a toast message and waits
         buttonDrop.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View view) {
-                sRef.child("Courses").child(course_id).setValue(null);
-                Toast.makeText(getApplicationContext(), "Drop Success!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
+
+                sRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.child("Courses").hasChild(course_id))
+                        {
+                            sRef.child("Courses").child(course_id).setValue(null);
+                            int slotNum = Integer.parseInt(slots);
+                            slotNum--;
+                            myRef.child("Slots").setValue(Integer.toString(slotNum));
+                            Toast.makeText(getApplicationContext(), "Drop Success!", Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(), "You cannot drop a course you are not in", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
             }
         });
 
         //Register button
+        //the timing conflict detector serves double duty as also preventing multiple
+        //registerations in the same class by the same user
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,6 +215,10 @@ public class Activity_CourseInformation extends AppCompatActivity {
 
                 }
                 //if not
+                else if (Integer.parseInt(slots) > 70) {
+                    Toast.makeText(getApplicationContext(), "No slots available", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
+                }
                 else{
 
                     //register the course with attributes
@@ -182,8 +230,12 @@ public class Activity_CourseInformation extends AppCompatActivity {
                     sRef.child("Courses").child(course_id).child("TimeEnd").setValue(end);
                     sRef.child("Courses").child(course_id).child("Fee").setValue(fee);
 
+                    int slotNum = Integer.parseInt(slots);
+                    slotNum++;
+                    myRef.child("Slots").setValue(Integer.toString(slotNum));
+
                     //report register success
-                    Toast.makeText(getApplicationContext(), "Register Success!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Register Success!", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
 
                 }
@@ -194,7 +246,17 @@ public class Activity_CourseInformation extends AppCompatActivity {
 
     }
 
-   //Display the course information
+    /**
+     * Display course. Lots of textviews getting filled out.
+     *
+     * @param prof     the prof
+     * @param name     the name
+     * @param location the location
+     * @param date     the date
+     * @param start    the start
+     * @param end      the end
+     */
+//Display the course information
     public void displayCourse(String prof, String name, String location, String date, String start, String end) {
 
         CourseID = (TextView) findViewById(R.id.CourseID);
@@ -218,6 +280,10 @@ public class Activity_CourseInformation extends AppCompatActivity {
 
         TimeEnd = (TextView) findViewById(R.id.time_end);
         TimeEnd.setText("Time End:     " + end);
+
+        SlotHolder = (TextView)findViewById(R.id.slots);
+        SlotHolder.setText("Slots Remaining:    " + slots + " of 70");
+
 
     }
 
