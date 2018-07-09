@@ -19,6 +19,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.LinkedList;
 
 
+/**
+ * The type Activity schedule wed.
+ * Basic functionality written by Bin He and Chasteen
+ */
 public class Activity_Schedule_Wed extends AppCompatActivity {
 
     private Button buttonBack;
@@ -139,6 +143,11 @@ public class Activity_Schedule_Wed extends AppCompatActivity {
 
     }
 
+    /**
+     * Display daily courses.
+     *
+     * @param daily_courses the daily courses
+     */
     @NonNull
     //display course method
     public void displayDailyCourses(LinkedList<Course> daily_courses) {

@@ -19,6 +19,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.LinkedList;
 
 
+/**
+ * The type Activity schedule tue.
+ * Basic functionality written by Bin He and Chasteen
+ */
 public class Activity_Schedule_Tue extends AppCompatActivity {
 
     private Button buttonBack;

@@ -1,16 +1,30 @@
 package com.example.group12.courseregisteration;
 
 
+/**
+ * The type Date time conflict.
+ * Basic functionality written by Bin He and Chasteen
+ */
 public class DateTimeConflict {
 
     private Boolean result;
 
-    //constructor
+    /**
+     * Instantiates a new Date time conflict.
+     */
+//constructor
     public DateTimeConflict(){
 
     }
 
-    //return true if has date time conflict
+    /**
+     * Time conflict boolean.
+     *
+     * @param enrolled the enrolled
+     * @param newTime  the new time
+     * @return the boolean
+     */
+//return true if has date time conflict
     public Boolean TimeConflict(DateTime enrolled, DateTime newTime){
 
         //if there are no date time have already enrolled, there is no conflict
@@ -51,7 +65,12 @@ public class DateTimeConflict {
 
     }
 
-    //return 1 if datetime has conflict
+    /**
+     * Test result int.
+     *
+     * @return the int
+     */
+//return 1 if datetime has conflict
     public int TestResult(){
 
         if(result == true){

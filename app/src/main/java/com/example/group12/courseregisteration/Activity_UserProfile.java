@@ -8,6 +8,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * The type Activity user profile.
+ * Basic functionality written by Peter and Xao
+ * Cleaned up by Bin He and Chasteen
+ */
 public class Activity_UserProfile extends AppCompatActivity {
 
     private Button buttonSignOut;

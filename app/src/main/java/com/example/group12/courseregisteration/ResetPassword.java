@@ -16,6 +16,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
+/**
+ * The type Reset password, for resetting passwords
+ * Basic functionality written by Peter and Mao
+ */
 public class ResetPassword extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -33,6 +37,7 @@ public class ResetPassword extends AppCompatActivity {
         editPassword = (EditText)findViewById(R.id.editText);
         returnToProfile = (Button)findViewById(R.id.button2);
 
+        //make sure a user is currently logged in, to avoid trying to change the password of null
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser() == null){
             finish();
