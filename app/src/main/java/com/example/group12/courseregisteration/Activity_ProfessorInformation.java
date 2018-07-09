@@ -11,17 +11,14 @@ import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.Spannable;
-import android.graphics.Typeface;
-import android.widget.Toast;
-import com.google.firebase.auth.FirebaseAuth;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import java.util.LinkedList;
 
-public class Activity_Professor extends AppCompatActivity {
+public class Activity_ProfessorInformation extends AppCompatActivity {
 
     //button
     private Button buttonBack;
@@ -48,7 +45,7 @@ public class Activity_Professor extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_professor);
+        setContentView(R.layout.activity_professor_information);
 
         //get professor and course id name from course information page
         Intent intent = getIntent();
@@ -90,7 +87,7 @@ public class Activity_Professor extends AppCompatActivity {
                 }
                 else {
                     //display not available
-                    displayProfessor("not available", "not available","not available");
+                    displayProfessor("NA", "NA","NA");
                 }
 
             }
@@ -140,17 +137,17 @@ public class Activity_Professor extends AppCompatActivity {
         Spannable wordOfficeHours = new SpannableString("Office hours:");
         wordOfficeHours.setSpan(new ForegroundColorSpan(Color.BLACK), 0, wordOfficeHours.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        //set the text
+        //set the text of professor information
         Professor_name.setText(professor);
 
         Email.setText(wordEmail);
-        Email.append(" " + email);
+        Email.append("  " + email);
 
         Office.setText(wordOffice);
-        Office.append(" " + office);
+        Office.append("  " + office);
 
-        Office_hours.setText(wordOffice);
-        Office_hours.append(" " + office_hrs);
+        Office_hours.setText(wordOfficeHours);
+        Office_hours.append("  " + office_hrs);
 
 
     }

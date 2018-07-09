@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseReference;
  * The type Reset password, for resetting passwords
  * Basic functionality written by Peter and Mao
  */
-public class ResetPassword extends AppCompatActivity {
+public class Activity_ResetPassword extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser user;

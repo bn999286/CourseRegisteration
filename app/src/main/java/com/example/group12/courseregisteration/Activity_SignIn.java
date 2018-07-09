@@ -14,8 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
 import android.graphics.Color;
 
 /**
@@ -35,7 +34,7 @@ public class Activity_SignIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity__sign_in);
+        setContentView(R.layout.activity_sign_in);
 
         //if user is already logged in, go directly to the profile page
         mAuth = FirebaseAuth.getInstance();
@@ -66,7 +65,7 @@ public class Activity_SignIn extends AppCompatActivity {
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),Register.class));
+                startActivity(new Intent(getApplicationContext(),Activity_RegisterAccount.class));
             }
         });
 

@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 @PowerMockRunnerDelegate(JUnit4.class)
 @PrepareForTest({ FirebaseDatabase.class})
 
-public class TuitionFee_Unit_Test {
+public class TuitionFee_UnitTest {
 
 
     LinkedList<String> list = new LinkedList<>();

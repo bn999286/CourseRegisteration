@@ -27,11 +27,11 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="197dp"
-        android:layout_height="54dp"
+        android:layout_width="204dp"
+        android:layout_height="40dp"
         android:layout_marginBottom="14dp"
-        android:layout_marginEnd="93dp"
-        android:layout_marginStart="94dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="14dp"
         android:gravity="center"
         android:text="Offered Courses"
@@ -40,7 +40,8 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewer" />
+        app:layout_constraintTop_toBottomOf="@+id/viewer"
+        app:layout_constraintVertical_bias="0.714" />
 
     <ListView
         android:id="@+id/viewer"
@@ -59,8 +60,8 @@
 
     <Button
         android:id="@+id/buttonBack"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
+        android:layout_width="124dp"
+        android:layout_height="47dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"

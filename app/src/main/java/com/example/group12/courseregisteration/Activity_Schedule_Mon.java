@@ -147,7 +147,7 @@ public class Activity_Schedule_Mon extends AppCompatActivity {
 
     @NonNull
     //display course method
-    private void displayDailyCourses(LinkedList<Course> daily_courses) {
+    private void displayDailyCourses(@NonNull LinkedList<Course> daily_courses) {
 
         for (int i = 0; i < daily_courses.size(); i++) {
 
@@ -157,41 +157,43 @@ public class Activity_Schedule_Mon extends AppCompatActivity {
             String professor = daily_courses.get(i).getCourseProfessor();
             String location = daily_courses.get(i).getCourseLocation();
 
-            @NonNull
-            String[] start_hourMinutes = start.split(":");
-            int start_hr = Integer.parseInt(start_hourMinutes[0]);
-            int start_min = Integer.parseInt(start_hourMinutes[1]);
-            int Start_time = (start_hr * 60) + ((start_min * 60) / 100);
+            if(start!= null && end!=null) {
 
-            @NonNull
-            String[] end_hourMinutes = end.split(":");
-            int end_hr = Integer.parseInt(end_hourMinutes[0]);
-            int end_min = Integer.parseInt(end_hourMinutes[1]);
-            int End_time = (end_hr * 60) + ((end_min * 60) / 100);
+                String[] start_hourMinutes = start.split(":");
+                int start_hr = Integer.parseInt(start_hourMinutes[0]);
+                int start_min = Integer.parseInt(start_hourMinutes[1]);
+                int Start_time = (start_hr * 60) + ((start_min * 60) / 100);
 
 
-            int BlockHeight = End_time - Start_time;
+                String[] end_hourMinutes = end.split(":");
+                int end_hr = Integer.parseInt(end_hourMinutes[0]);
+                int end_min = Integer.parseInt(end_hourMinutes[1]);
+                int End_time = (end_hr * 60) + ((end_min * 60) / 100);
+
+                int BlockHeight = End_time - Start_time;
 
 
-            TextView EventView = new TextView(Activity_Schedule_Mon.this);
-            RelativeLayout.LayoutParams lParam = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            lParam.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                TextView EventView = new TextView(Activity_Schedule_Mon.this);
+                RelativeLayout.LayoutParams lParam = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                lParam.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 
-            lParam.topMargin = (Start_time - 400) * 4;
-            lParam.leftMargin = 24;
+                lParam.topMargin = (Start_time - 400) * 4;
+                lParam.leftMargin = 24;
 
-            EventView.setLayoutParams(lParam);
+                EventView.setLayoutParams(lParam);
 
-            EventView.setPadding(24, 0, 24, 0);
-            EventView.setHeight(BlockHeight * 4);
-            EventView.setWidth(491);
-            EventView.setGravity(0x11);
-            EventView.setTextColor(Color.BLACK);
-            EventView.setText(start + " - " + end + "\n" + name + "\n" + "Professor: " + professor + "\n" + "Location: " + location);
-            EventView.setBackgroundColor(Color.parseColor("#F5B041"));
+                EventView.setPadding(24, 0, 24, 0);
+                EventView.setHeight(BlockHeight * 4);
+                EventView.setWidth(491);
+                EventView.setGravity(0x11);
+                EventView.setTextColor(Color.BLACK);
+                EventView.setText(start + " - " + end + "\n" + name + "\n" + "Professor: " + professor + "\n" + "Location: " + location);
+                EventView.setBackgroundColor(Color.parseColor("#F5B041"));
 
-            RelativeLayout mLayout = (RelativeLayout) findViewById(R.id.left_event_column);
-            mLayout.addView(EventView);
+                RelativeLayout mLayout = (RelativeLayout) findViewById(R.id.left_event_column);
+                mLayout.addView(EventView);
+
+            }
 
         }
 

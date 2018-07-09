@@ -50,7 +50,7 @@ public class Activity_UserProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-                startActivity(new Intent(getApplicationContext(), ResetPassword.class));
+                startActivity(new Intent(getApplicationContext(), Activity_ResetPassword.class));
             }
         });
 

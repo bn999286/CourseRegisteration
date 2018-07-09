@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
 
 */
-public class Professor_Information_Unit_Test {
+public class Professor_Information_UnitTest {
 
        @Test
        public void testProfessor_exists(){

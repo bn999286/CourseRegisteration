@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.Spannable;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +38,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
     private TextView TimeEnd;
     private TextView Date;
     private TextView Location;
-    private TextView SlotHolder;
+    private TextView Enrollment;
 
     //button
     private Button buttonBack;
@@ -51,7 +54,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
     private String date;
     private String start;
     private String end;
-    private String slots;
+    private String enroll;
     private String fee;
 
 
@@ -86,7 +89,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
         //retreive course information from firebase and display them on UI
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 name = dataSnapshot.child("CourseName").getValue(String.class);
                 prof = dataSnapshot.child("Professor").getValue(String.class);
@@ -94,7 +97,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
                 date = dataSnapshot.child("Date").getValue(String.class);
                 start = dataSnapshot.child("TimeStart").getValue(String.class);
                 end = dataSnapshot.child("TimeEnd").getValue(String.class);
-                slots = dataSnapshot.child("Slots").getValue(String.class);
+                enroll = dataSnapshot.child("Slots").getValue(String.class);
 
                 fee = dataSnapshot.child("Fee").getValue(String.class);
 
@@ -113,7 +116,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
         testDateTimeRecord.clear();
         sRef.child("Courses").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
 
@@ -123,7 +126,6 @@ public class Activity_CourseInformation extends AppCompatActivity {
 
                     //Count the student courses
                     Student_course_count ++;
-
 
                     DateTime enrolled_time = new DateTime(d, s, e);
                     DateTime new_time = new DateTime(date, start, end);
@@ -164,12 +166,13 @@ public class Activity_CourseInformation extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getBaseContext(), Activity_Professor.class);
-                //pass professor name and course id to professor information page
+                Intent intent = new Intent(getBaseContext(), Activity_ProfessorInformation.class);
 
+                //pass professor name and course id to professor information page
                 Bundle extras = new Bundle();
                 extras.putString("Professor", prof);
                 extras.putString("Course_ID", course_id);
+
                 intent.putExtras(extras);
                 finish();
                 startActivity(intent);
@@ -191,12 +194,18 @@ public class Activity_CourseInformation extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.child("Courses").hasChild(course_id))
                         {
+                            //delete keys
                             sRef.child("Courses").child(course_id).setValue(null);
-                            int slotNum = Integer.parseInt(slots);
-                            slotNum--;
-                            myRef.child("Slots").setValue(Integer.toString(slotNum));
+
+                            //decrease enroll number by 1
+                            int enroll_num = Integer.parseInt(enroll);
+                            enroll_num--;
+
+                            myRef.child("Slots").setValue(Integer.toString(enroll_num));
+
                             Toast.makeText(getApplicationContext(), "Drop Success!", Toast.LENGTH_LONG).show();
                             startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
+
                         }
                         else{
                             Toast.makeText(getApplicationContext(), "You cannot drop a course you are not in", Toast.LENGTH_SHORT).show();
@@ -236,8 +245,8 @@ public class Activity_CourseInformation extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
 
                 }
-                //if not
-                else if (Integer.parseInt(slots) > 70) {
+                //if enrollment for this course is larger than 70
+                else if (Integer.parseInt(enroll) > 70) {
                     Toast.makeText(getApplicationContext(), "No slots available", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
                 }
@@ -252,9 +261,10 @@ public class Activity_CourseInformation extends AppCompatActivity {
                     sRef.child("Courses").child(course_id).child("TimeEnd").setValue(end);
                     sRef.child("Courses").child(course_id).child("Fee").setValue(fee);
 
-                    int slotNum = Integer.parseInt(slots);
-                    slotNum++;
-                    myRef.child("Slots").setValue(Integer.toString(slotNum));
+                    //increase enrollment number by 1
+                    int enroll_num = Integer.parseInt(enroll);
+                    enroll_num++;
+                    myRef.child("Slots").setValue(Integer.toString(enroll_num));
 
                     //report register success
                     Toast.makeText(getApplicationContext(), "Register Success!", Toast.LENGTH_LONG).show();
@@ -279,32 +289,69 @@ public class Activity_CourseInformation extends AppCompatActivity {
      * @param end      the end
      */
 //Display the course information
-    public void displayCourse(String prof, String name, String location, String date, String start, String end) {
+    public void displayCourse(@NonNull String prof, String name, String location, String date, String start, String end) {
 
+        //Assign the textview
         CourseID = (TextView) findViewById(R.id.CourseID);
+        Professor = (TextView) findViewById(R.id.professor);
+        CourseName = (TextView) findViewById(R.id.course_name);
+        Location = (TextView) findViewById(R.id.Location);
+        Date = (TextView) findViewById(R.id.Date);
+        TimeStart = (TextView) findViewById(R.id.time_start);
+        TimeEnd = (TextView) findViewById(R.id.time_end);
+        Enrollment = (TextView)findViewById(R.id.Enrollment);
+
+
+        //set text of course id
         CourseID.setText(course_id);
         CourseID.setTextColor(Color.BLACK);
 
-        Professor = (TextView) findViewById(R.id.professor);
-        Professor.setText("Professor: " + prof);
 
-        CourseName = (TextView) findViewById(R.id.course_name);
-        CourseName.setText("Course Name: " + name);
+        //set the title words black color
+        Spannable wordProfessor = new SpannableString("Professor:");
+        wordProfessor.setSpan(new ForegroundColorSpan(Color.BLACK), 0, wordProfessor.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        Location = (TextView) findViewById(R.id.Location);
-        Location.setText("Location: " + location);
+        Spannable wordCourseName = new SpannableString("Course Name:");
+        wordCourseName.setSpan(new ForegroundColorSpan(Color.BLACK), 0, wordCourseName.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        Date = (TextView) findViewById(R.id.Date);
-        Date.setText("Date: " + date);
+        Spannable wordLocation= new SpannableString("Location:");
+        wordLocation.setSpan(new ForegroundColorSpan(Color.BLACK), 0, wordLocation.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        TimeStart = (TextView) findViewById(R.id.time_start);
-        TimeStart.setText("Time Start: " + start);
+        Spannable wordDate = new SpannableString("Date:");
+        wordDate.setSpan(new ForegroundColorSpan(Color.BLACK), 0, wordDate.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        TimeEnd = (TextView) findViewById(R.id.time_end);
-        TimeEnd.setText("Time End: " + end);
+        Spannable wordTimeStart = new SpannableString("Time start:");
+        wordTimeStart.setSpan(new ForegroundColorSpan(Color.BLACK), 0, wordTimeStart.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        SlotHolder = (TextView)findViewById(R.id.slots);
-        SlotHolder.setText("Slots Remaining: " + slots + " of 70");
+        Spannable wordTimeEnd = new SpannableString("Time end:");
+        wordTimeEnd.setSpan(new ForegroundColorSpan(Color.BLACK), 0, wordTimeEnd.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        Spannable wordEnroll = new SpannableString("Enrollment:");
+        wordEnroll.setSpan(new ForegroundColorSpan(Color.BLACK), 0, wordEnroll.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
+        //set text of course information
+        Professor.setText(wordProfessor);
+        Professor.append("  " + prof);
+
+        CourseName.setText(wordCourseName);
+        CourseName.append("  " + name);
+
+        Location.setText(wordLocation);
+        Location.append("  " + location);
+
+        Date.setText(wordDate);
+        Date.append("  " + date);
+
+        TimeStart.setText(wordTimeStart);
+        TimeStart.append("  " + start);
+
+        TimeEnd.setText(wordTimeEnd);
+        TimeEnd.append("  " + end);
+
+        Enrollment.setText(wordEnroll);
+        Enrollment.append("  " + enroll + " of 70");
+        Enrollment.setTextColor(Color.RED);
 
 
     }

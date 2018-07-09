@@ -19,7 +19,7 @@ import java.util.LinkedList;
 
 public class Activity_Tuition_Fee extends AppCompatActivity {
 
-    private Button Back;
+    private Button buttonBack;
 
     private TextView ViewFee;
 
@@ -30,7 +30,6 @@ public class Activity_Tuition_Fee extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tuition_fee);
-
 
         //direct to student_id, the child of root Students in Firebase
         final String student_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -55,7 +54,11 @@ public class Activity_Tuition_Fee extends AppCompatActivity {
 
                     //Calculate total fee
                     for (int i = 0; i < Fee_list.size(); i++) {
-                        totalFee = totalFee + Double.parseDouble(Fee_list.get(i));
+
+                        if(Fee_list.get(i)!=null) {
+                            totalFee = totalFee + Double.parseDouble(Fee_list.get(i));
+                        }
+
                     }
 
                     //Display total fee
@@ -63,6 +66,11 @@ public class Activity_Tuition_Fee extends AppCompatActivity {
                     ViewFee.setText("$ " + String.valueOf(totalFee));
 
                 }
+                else{
+                    ViewFee = (TextView) findViewById(R.id.textViewFee);
+                    ViewFee.setText("$ " + 0.0);
+                }
+
 
             }
             @Override
@@ -74,8 +82,8 @@ public class Activity_Tuition_Fee extends AppCompatActivity {
 
 
         //Back button
-        Back = (Button) findViewById(R.id.buttonBack);
-        Back.setOnClickListener(new View.OnClickListener() {
+        buttonBack = (Button) findViewById(R.id.buttonBack);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Activity_UserProfile.class));

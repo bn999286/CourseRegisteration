@@ -26,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
  * The type Register, for registering users
  * Basic functionality created by Peter and Mao
  */
-public class Register extends AppCompatActivity {
+public class Activity_RegisterAccount extends AppCompatActivity {
 
     private Button btnSubmit;
     private EditText mName,mEmail,mPhoneNum, mpassword;
@@ -40,12 +40,15 @@ public class Register extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_register_account);
+
+
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
         mName = (EditText) findViewById(R.id.etName);
         mEmail = (EditText) findViewById(R.id.etEmail);
         mPhoneNum = (EditText) findViewById(R.id.etPhone);
         mpassword = (EditText)findViewById(R.id.password);
+
 
         //checks to make sure user is not already existing in database
         mAuth = FirebaseAuth.getInstance();
@@ -65,21 +68,22 @@ public class Register extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 final String name = mName.getText().toString().trim();
                 final String email = mEmail.getText().toString().trim();
                 final String phoneNum = mPhoneNum.getText().toString().trim();
                 final String password = mpassword.getText().toString().trim();
 
-
                 //handle the exception if the EditText fields are null
                 if(!name.equals("") && !email.equals("") && !phoneNum.equals("") && !password.equals("")){
-                    Toast.makeText(Register.this, email, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_RegisterAccount.this, email, Toast.LENGTH_SHORT).show();
 
                     mAuth.createUserWithEmailAndPassword(email,password)
-                            .addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
+                            .addOnCompleteListener(Activity_RegisterAccount.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()){
+
                                         user = mAuth.getCurrentUser();
                                         userID = user.getUid();
 
@@ -88,10 +92,12 @@ public class Register extends AppCompatActivity {
                                         toastMessage(String.valueOf(R.string.regMessage));
                                         finish();
                                         startActivity(new Intent(getApplicationContext(), Activity_UserProfile.class));
+
                                     }
                                     else{
-                                        Toast.makeText(Register.this, "Could not register", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Activity_RegisterAccount.this, "Could not register", Toast.LENGTH_SHORT).show();
                                     }
+
                                 }
                             });
                 }else{

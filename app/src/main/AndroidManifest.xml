@@ -8,12 +8,17 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
+
+
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
+
         <activity android:name=".Activity_SignIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+
         <activity android:name=".Activity_UserProfile" />
         <activity android:name=".Activity_OfferedCourses" />
         <activity android:name=".Activity_CourseInformation" />
@@ -30,9 +38,13 @@
         <activity android:name=".Activity_Schedule_Wed" />
         <activity android:name=".Activity_Schedule_Thu" />
         <activity android:name=".Activity_Schedule_Fri" />
-        <activity android:name=".ResetPassword" />
-        <activity android:name=".Register" />
-        <activity android:name=".Activity_Professor"></activity>
+        <activity android:name=".Activity_ResetPassword" />
+        <activity android:name=".Activity_RegisterAccount" />
+        <activity android:name=".Activity_ProfessorInformation"></activity>
+
+
+
+
     </application>
 
 </manifest>
