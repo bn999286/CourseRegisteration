@@ -14,26 +14,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".Activity_SignIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Activity_UserProfile" />
         <activity android:name=".Activity_OfferedCourses" />
         <activity android:name=".Activity_CourseInformation" />
         <activity android:name=".Activity_Tuition_Fee" />
-
         <activity android:name=".Activity_Schedule_Mon" />
         <activity android:name=".Activity_Schedule_Tue" />
         <activity android:name=".Activity_Schedule_Wed" />
         <activity android:name=".Activity_Schedule_Thu" />
-        <activity android:name=".Activity_Schedule_Fri"></activity>
-
-
+        <activity android:name=".Activity_Schedule_Fri" />
+        <activity android:name=".ResetPassword"></activity>
     </application>
 
 </manifest>
