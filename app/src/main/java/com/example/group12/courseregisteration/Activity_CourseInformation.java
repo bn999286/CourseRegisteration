@@ -41,6 +41,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
     private Button buttonBack;
     private Button buttonRegister;
     private Button buttonDrop;
+    private Button buttonProfessor;
 
     //string
     private String course_id;
@@ -145,6 +146,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
         buttonBack = (Button)findViewById(R.id.buttonBack);
         buttonDrop = (Button)findViewById(R.id.buttonDrop);
         buttonRegister = (Button)findViewById(R.id.buttonRegister);
+        buttonProfessor = (Button)findViewById(R.id.buttonProfessor);
 
 
         //back button
@@ -153,6 +155,25 @@ public class Activity_CourseInformation extends AppCompatActivity {
             public void onClick(View view) {
                 finish();
                 startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
+            }
+        });
+
+
+        //Professor information button
+        buttonProfessor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getBaseContext(), Activity_Professor.class);
+                //pass professor name and course id to professor information page
+
+                Bundle extras = new Bundle();
+                extras.putString("Professor", prof);
+                extras.putString("Course_ID", course_id);
+                intent.putExtras(extras);
+                finish();
+                startActivity(intent);
+
             }
         });
 
@@ -265,25 +286,25 @@ public class Activity_CourseInformation extends AppCompatActivity {
         CourseID.setTextColor(Color.BLACK);
 
         Professor = (TextView) findViewById(R.id.professor);
-        Professor.setText("Professor:     " + prof);
+        Professor.setText("Professor: " + prof);
 
         CourseName = (TextView) findViewById(R.id.course_name);
-        CourseName.setText("Course Name:     " + name);
+        CourseName.setText("Course Name: " + name);
 
         Location = (TextView) findViewById(R.id.Location);
-        Location.setText("Location:     " + location);
+        Location.setText("Location: " + location);
 
         Date = (TextView) findViewById(R.id.Date);
-        Date.setText("Date:     " + date);
+        Date.setText("Date: " + date);
 
         TimeStart = (TextView) findViewById(R.id.time_start);
-        TimeStart.setText("Time Start:     " + start);
+        TimeStart.setText("Time Start: " + start);
 
         TimeEnd = (TextView) findViewById(R.id.time_end);
-        TimeEnd.setText("Time End:     " + end);
+        TimeEnd.setText("Time End: " + end);
 
         SlotHolder = (TextView)findViewById(R.id.slots);
-        SlotHolder.setText("Slots Remaining:    " + slots + " of 70");
+        SlotHolder.setText("Slots Remaining: " + slots + " of 70");
 
 
     }
