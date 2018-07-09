@@ -51,6 +51,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
     private String start;
     private String end;
     private String slots;
+    private String fee;
 
 
 
