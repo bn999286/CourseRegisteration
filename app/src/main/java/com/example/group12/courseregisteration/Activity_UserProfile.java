@@ -14,6 +14,7 @@ public class Activity_UserProfile extends AppCompatActivity {
     private Button buttonOfferedCourses;
     private Button buttonSchedule;
     private Button changePassword;
+    private Button buttonTuitionFee;
     private TextView showEmail;
     private FirebaseAuth mAuth;
 
@@ -32,7 +33,9 @@ public class Activity_UserProfile extends AppCompatActivity {
         buttonSignOut =(Button)findViewById(R.id.buttonSignOut);
         buttonOfferedCourses = (Button)findViewById(R.id.buttonOfferedCourse);
         buttonSchedule = (Button)findViewById(R.id.buttonSchedule);
+        buttonTuitionFee = (Button)findViewById(R.id.buttonTuitionFee);
 
+        //Show email
         showEmail = (TextView)findViewById(R.id.textViewEmail);
         changePassword = (Button)findViewById(R.id.buttonPassword);
         showEmail.setText(mAuth.getCurrentUser().getEmail());
@@ -73,6 +76,14 @@ public class Activity_UserProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), Activity_Schedule_Mon.class));
+            }
+        });
+
+        //Tuition Fee button
+        buttonTuitionFee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Activity_Tuition_Fee.class));
             }
         });
 
