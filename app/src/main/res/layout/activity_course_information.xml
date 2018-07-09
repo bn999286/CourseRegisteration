@@ -7,7 +7,6 @@
     tools:context=".Activity_CourseInformation">
 
 
-
     <Button
         android:id="@+id/buttonRegister"
         android:layout_width="95dp"
@@ -19,10 +18,10 @@
         android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.783"
+        app:layout_constraintHorizontal_bias="0.857"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.758" />
+        app:layout_constraintVertical_bias="0.823" />
 
     <TextView
         android:id="@+id/professor"
@@ -99,10 +98,10 @@
         android:text="Drop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.216"
+        app:layout_constraintHorizontal_bias="0.142"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.758" />
+        app:layout_constraintVertical_bias="0.823" />
 
     <TextView
         android:id="@+id/CourseID"
@@ -168,6 +167,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.351" />
+
+    <TextView
+        android:id="@+id/slots"
+        android:layout_width="254dp"
+        android:layout_height="36dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="63dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="1dp"
+        android:text="SLOTS REMAINING"
+        app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time_end" />
 
 
 </android.support.constraint.ConstraintLayout>

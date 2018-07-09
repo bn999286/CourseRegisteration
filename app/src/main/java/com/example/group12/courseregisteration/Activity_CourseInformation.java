@@ -27,6 +27,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
     private TextView TimeEnd;
     private TextView Date;
     private TextView Location;
+    private TextView SlotHolder;
 
     //button
     private Button buttonBack;
@@ -41,6 +42,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
     private String date;
     private String start;
     private String end;
+    private String slots;
     private String fee;
 
     //count the number of student's courses
@@ -62,7 +64,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
         //direct to course_id key
         course_id = getIntent().getStringExtra("Course ID");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Courses/" + course_id);
+        final DatabaseReference myRef = database.getReference("Courses/" + course_id);
 
         //retreive course information from firebase and display them on UI
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -75,6 +77,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
                 date = dataSnapshot.child("Date").getValue(String.class);
                 start = dataSnapshot.child("TimeStart").getValue(String.class);
                 end = dataSnapshot.child("TimeEnd").getValue(String.class);
+                slots = dataSnapshot.child("Slots").getValue(String.class);
 
                 fee = dataSnapshot.child("Fee").getValue(String.class);
 
@@ -140,11 +143,34 @@ public class Activity_CourseInformation extends AppCompatActivity {
 
         //Drop button
         buttonDrop.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View view) {
-                sRef.child("Courses").child(course_id).setValue(null);
-                Toast.makeText(getApplicationContext(), "Drop Success!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
+
+                sRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.child("Courses").hasChild(course_id))
+                        {
+                            sRef.child("Courses").child(course_id).setValue(null);
+                            int slotNum = Integer.parseInt(slots);
+                            slotNum--;
+                            myRef.child("Slots").setValue(Integer.toString(slotNum));
+                            Toast.makeText(getApplicationContext(), "Drop Success!", Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(), "You cannot drop a course you are not in", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
             }
         });
 
@@ -171,6 +197,10 @@ public class Activity_CourseInformation extends AppCompatActivity {
 
                 }
                 //if not
+                else if (Integer.parseInt(slots) > 70) {
+                    Toast.makeText(getApplicationContext(), "No slots available", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
+                }
                 else{
 
                     //register the course with attributes
@@ -182,8 +212,12 @@ public class Activity_CourseInformation extends AppCompatActivity {
                     sRef.child("Courses").child(course_id).child("TimeEnd").setValue(end);
                     sRef.child("Courses").child(course_id).child("Fee").setValue(fee);
 
+                    int slotNum = Integer.parseInt(slots);
+                    slotNum++;
+                    myRef.child("Slots").setValue(Integer.toString(slotNum));
+
                     //report register success
-                    Toast.makeText(getApplicationContext(), "Register Success!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Register Success!", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
 
                 }
@@ -218,6 +252,10 @@ public class Activity_CourseInformation extends AppCompatActivity {
 
         TimeEnd = (TextView) findViewById(R.id.time_end);
         TimeEnd.setText("Time End:     " + end);
+
+        SlotHolder = (TextView)findViewById(R.id.slots);
+        SlotHolder.setText("Slots Remaining:    " + slots + " of 70");
+
 
     }
 

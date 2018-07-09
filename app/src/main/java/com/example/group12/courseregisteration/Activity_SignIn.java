@@ -25,6 +25,7 @@ public class Activity_SignIn extends AppCompatActivity {
     private EditText editTextPassword;
     private TextView message;
     private FirebaseAuth mAuth;
+    private Button reg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class Activity_SignIn extends AppCompatActivity {
 
 
         buttonSignIn = (Button)findViewById(R.id.buttonSignIn);
+        reg = (Button)findViewById(R.id.regButton);
         editTextEmail = (EditText)findViewById(R.id.editTextEmail);
         editTextPassword = (EditText)findViewById(R.id.editTextPassword);
         message = (TextView) findViewById(R.id.Message);
@@ -54,6 +56,13 @@ public class Activity_SignIn extends AppCompatActivity {
 
                 userSignIn();
 
+            }
+        });
+
+        reg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),Register.class));
             }
         });
 
@@ -84,8 +93,7 @@ public class Activity_SignIn extends AppCompatActivity {
 
                         if (task.isSuccessful()) {
                             //finish();
-                            message.setText("Verification success!");
-                            message.setTextColor(Color.GREEN);
+                            Toast.makeText(getApplicationContext(), "Verification Success",Toast.LENGTH_SHORT).show();
                             finish();
                             startActivity(new Intent(getApplicationContext(), Activity_UserProfile.class));
                         }
