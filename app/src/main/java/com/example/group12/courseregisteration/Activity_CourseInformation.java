@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.LinkedList;
 
+//displays course information for single class
 public class Activity_CourseInformation extends AppCompatActivity {
 
     //text view
