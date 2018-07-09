@@ -53,6 +53,10 @@ public class Activity_CourseInformation extends AppCompatActivity {
     private String slots;
 
 
+
+    //count the number of student's courses
+    private int Student_course_count;
+
     /**
      * The Student id.
      */
@@ -90,6 +94,8 @@ public class Activity_CourseInformation extends AppCompatActivity {
                 end = dataSnapshot.child("TimeEnd").getValue(String.class);
                 slots = dataSnapshot.child("Slots").getValue(String.class);
 
+                fee = dataSnapshot.child("Fee").getValue(String.class);
+
                 displayCourse(prof, name, location, date, start, end);
 
             }
@@ -112,6 +118,10 @@ public class Activity_CourseInformation extends AppCompatActivity {
                     String d = child.child("Date").getValue(String.class);
                     String s = child.child("TimeStart").getValue(String.class);
                     String e = child.child("TimeEnd").getValue(String.class);
+
+                    //Count the student courses
+                    Student_course_count ++;
+
 
                     DateTime enrolled_time = new DateTime(d, s, e);
                     DateTime new_time = new DateTime(date, start, end);
@@ -196,6 +206,14 @@ public class Activity_CourseInformation extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
 
                 }
+                //if student course count is already 5
+                else if(Student_course_count ==5){
+
+                    //report error of over course limit
+                    Toast.makeText(getApplicationContext(), "Exceed course limit 5!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
+
+                }
                 //if not
                 else if (Integer.parseInt(slots) > 70) {
                     Toast.makeText(getApplicationContext(), "No slots available", Toast.LENGTH_SHORT).show();
@@ -210,6 +228,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
                     sRef.child("Courses").child(course_id).child("Location").setValue(location);
                     sRef.child("Courses").child(course_id).child("TimeStart").setValue(start);
                     sRef.child("Courses").child(course_id).child("TimeEnd").setValue(end);
+                    sRef.child("Courses").child(course_id).child("Fee").setValue(fee);
 
                     int slotNum = Integer.parseInt(slots);
                     slotNum++;

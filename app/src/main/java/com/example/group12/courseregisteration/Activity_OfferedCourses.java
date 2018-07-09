@@ -1,5 +1,8 @@
 package com.example.group12.courseregisteration;
 
+//to-do
+//add javadoc and expresso
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
