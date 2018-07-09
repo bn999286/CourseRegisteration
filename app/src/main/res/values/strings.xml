@@ -6,5 +6,6 @@
     <string name="signout_button">Sign out</string>
     <string name="button_offeredcourses">Offered Courses</string>
     <string name="regMessage">New Information has been saved.</string>
+    <string name="searchH">Search for a course</string>
 
 </resources>
