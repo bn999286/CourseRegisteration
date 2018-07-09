@@ -41,6 +41,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
     private String date;
     private String start;
     private String end;
+    private String fee;
 
     //count the number of student's courses
     private int Student_course_count;
@@ -74,6 +75,8 @@ public class Activity_CourseInformation extends AppCompatActivity {
                 date = dataSnapshot.child("Date").getValue(String.class);
                 start = dataSnapshot.child("TimeStart").getValue(String.class);
                 end = dataSnapshot.child("TimeEnd").getValue(String.class);
+
+                fee = dataSnapshot.child("Fee").getValue(String.class);
 
                 displayCourse(prof, name, location, date, start, end);
 
@@ -177,6 +180,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
                     sRef.child("Courses").child(course_id).child("Location").setValue(location);
                     sRef.child("Courses").child(course_id).child("TimeStart").setValue(start);
                     sRef.child("Courses").child(course_id).child("TimeEnd").setValue(end);
+                    sRef.child("Courses").child(course_id).child("Fee").setValue(fee);
 
                     //report register success
                     Toast.makeText(getApplicationContext(), "Register Success!", Toast.LENGTH_SHORT).show();
