@@ -19,7 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+//lists offered courses from database
 public class Activity_OfferedCourses extends AppCompatActivity {
+
 
     private Button buttonBack;
 
