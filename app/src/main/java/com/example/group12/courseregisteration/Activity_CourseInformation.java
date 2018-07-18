@@ -58,7 +58,6 @@ public class Activity_CourseInformation extends AppCompatActivity {
     private String fee;
 
 
-
     //count the number of student's courses
     private int Student_course_count;
 
@@ -98,10 +97,10 @@ public class Activity_CourseInformation extends AppCompatActivity {
                 start = dataSnapshot.child("TimeStart").getValue(String.class);
                 end = dataSnapshot.child("TimeEnd").getValue(String.class);
                 enroll = dataSnapshot.child("Slots").getValue(String.class);
-
                 fee = dataSnapshot.child("Fee").getValue(String.class);
 
-                displayCourse(prof, name, location, date, start, end);
+
+                displayCourse(prof, name, location, date, start, end, enroll);
 
             }
             @Override
@@ -245,7 +244,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
 
                 }
-                //if enrollment for this course is larger than 70
+                //if enrollment for this course is larger than maximum enrollment
                 else if (Integer.parseInt(enroll) > 70) {
                     Toast.makeText(getApplicationContext(), "No slots available", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
@@ -287,9 +286,11 @@ public class Activity_CourseInformation extends AppCompatActivity {
      * @param date     the date
      * @param start    the start
      * @param end      the end
+     * @param prof      the professor name
+     * @param enroll      the enroll
      */
 //Display the course information
-    public void displayCourse(@NonNull String prof, String name, String location, String date, String start, String end) {
+    public void displayCourse(@NonNull String prof, String name, String location, String date, String start, String end, String enroll) {
 
         //Assign the textview
         CourseID = (TextView) findViewById(R.id.CourseID);
@@ -350,7 +351,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
         TimeEnd.append("  " + end);
 
         Enrollment.setText(wordEnroll);
-        Enrollment.append("  " + enroll + " of 70");
+        Enrollment.append("  " + enroll + " of " + "70");
         Enrollment.setTextColor(Color.RED);
 
 

@@ -5,6 +5,7 @@ package com.example.group12.courseregisteration;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +18,8 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -34,6 +38,7 @@ import java.util.List;
 public class Activity_OfferedCourses extends AppCompatActivity {
 
     private Button buttonBack;
+    private ListView listview;
     MaterialSearchView searchView;
     String[] courseName;
 
@@ -42,8 +47,7 @@ public class Activity_OfferedCourses extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offered_courses);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Courses");
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Courses");
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -54,6 +58,7 @@ public class Activity_OfferedCourses extends AppCompatActivity {
                 int count = (int) dataSnapshot.getChildrenCount();
                 int position = 0;
                 String[] courseNames = new String[count];
+
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     courseNames[position] = child.getKey();
                     position++;
@@ -70,6 +75,9 @@ public class Activity_OfferedCourses extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
             }
         });
+
+
+
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -98,6 +106,7 @@ public class Activity_OfferedCourses extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
                 if (newText != null && !newText.isEmpty())
                 {
                     List<String> IsFound = new ArrayList<String>();
@@ -122,6 +131,7 @@ public class Activity_OfferedCourses extends AppCompatActivity {
             }
         });
 
+
         //back button to user profile
         buttonBack = (Button) findViewById(R.id.buttonBack);
         buttonBack.setOnClickListener(new View.OnClickListener() {
@@ -144,17 +154,52 @@ public class Activity_OfferedCourses extends AppCompatActivity {
     public void displayCourses(String[] courseNames) {
 
         ListAdapter adpt = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, courseNames);
-        ListView listview = (ListView) findViewById(R.id.viewer);
+        listview = (ListView) findViewById(R.id.viewer);
         listview.setAdapter(adpt);
 
-        //variable food is used entirely because I was hungry when I wrote this
+        //set the color of the item if course has been registered
+        String student_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference sRef = FirebaseDatabase.getInstance().getReference("Students/" + student_id +"/Courses");
+
+        sRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+
+                    String course_id = child.getKey();
+
+                    if (course_id != null) {
+
+                        for (int i = 0; i < listview.getAdapter().getCount(); i++) {
+
+                            if (course_id.equals(listview.getAdapter().getItem(i).toString())) {
+
+                                if(listview.getChildAt(i)!=null) {
+                                    listview.getChildAt(i).setBackgroundColor(Color.YELLOW);
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+        //View course information by clicking item
         listview.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String food = String.valueOf(parent.getItemAtPosition(position));
+                        String course_id = String.valueOf(parent.getItemAtPosition(position));
                         Intent intent = new Intent(getBaseContext(), Activity_CourseInformation.class);
-                        intent.putExtra("Course ID", food);
+                        intent.putExtra("Course ID", course_id);
                         finish();
                         startActivity(intent);
                     }
@@ -162,6 +207,7 @@ public class Activity_OfferedCourses extends AppCompatActivity {
         );
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
