@@ -26,7 +26,6 @@ public class Activity_SignIn extends AppCompatActivity {
     private Button buttonSignIn;
     private EditText editTextEmail;
     private EditText editTextPassword;
-    private TextView message;
     private FirebaseAuth mAuth;
     private Button reg;
 
@@ -50,7 +49,6 @@ public class Activity_SignIn extends AppCompatActivity {
         reg = (Button)findViewById(R.id.regButton);
         editTextEmail = (EditText)findViewById(R.id.editTextEmail);
         editTextPassword = (EditText)findViewById(R.id.editTextPassword);
-        message = (TextView) findViewById(R.id.Message);
 
 
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
@@ -104,8 +102,7 @@ public class Activity_SignIn extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext(), Activity_UserProfile.class));
                         }
                         else{
-                            message.setText("Invaild email or password!");
-                            message.setTextColor(Color.RED);
+                            Toast.makeText(getApplicationContext(), "Invalid email or password",Toast.LENGTH_SHORT).show();
                         }
 
                     }
