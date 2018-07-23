@@ -7,6 +7,20 @@
     tools:context=".Activity_OfferedCourses"
     tools:ignore="ExtraText">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background_2" />
+
+
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width = "match_parent"
@@ -23,6 +37,7 @@
         android:textColor="#FFFFFF"
         android:textColorHint="#ffffff"
     />
+
 
 
     <TextView
@@ -60,12 +75,13 @@
 
     <Button
         android:id="@+id/buttonBack"
-        android:layout_width="124dp"
-        android:layout_height="47dp"
+        android:layout_width="132dp"
+        android:layout_height="35dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/button_background"
         android:text="Back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
