@@ -98,7 +98,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
                 date = dataSnapshot.child("Date").getValue(String.class);
                 start = dataSnapshot.child("TimeStart").getValue(String.class);
                 end = dataSnapshot.child("TimeEnd").getValue(String.class);
-                enroll = dataSnapshot.child("Slots").getValue(String.class)
+                enroll = dataSnapshot.child("Slots").getValue(String.class);
 
                 max_enroll = dataSnapshot.child("MaxEnroll").getValue(String.class);
 
