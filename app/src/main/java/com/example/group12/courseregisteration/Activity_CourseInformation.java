@@ -58,7 +58,6 @@ public class Activity_CourseInformation extends AppCompatActivity {
     private String fee;
 
 
-
     //count the number of student's courses
     private int Student_course_count;
 
@@ -200,8 +199,15 @@ public class Activity_CourseInformation extends AppCompatActivity {
                             //decrease enroll number by 1
                             int enroll_num = Integer.parseInt(enroll);
                             enroll_num--;
-
                             myRef.child("Slots").setValue(Integer.toString(enroll_num));
+
+                            //get student email and course information and create a sender to send the email notification
+                            String receiver_email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                            String subject = course_id +"has been dropped";
+                            String message = "You have dropped the course " + course_id + ": " + name + "\n";
+                            EmailSender sender = new EmailSender();
+                            sender.sendEmail(receiver_email, subject, message);
+
 
                             Toast.makeText(getApplicationContext(), "Drop Success!", Toast.LENGTH_LONG).show();
                             startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
@@ -265,6 +271,13 @@ public class Activity_CourseInformation extends AppCompatActivity {
                     int enroll_num = Integer.parseInt(enroll);
                     enroll_num++;
                     myRef.child("Slots").setValue(Integer.toString(enroll_num));
+
+                    //get student email and course information and create a sender to send the email notification
+                    String receiver_email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                    String subject = course_id +"has been registered";
+                    String message = "You have registered the course " + course_id + ": " + name + "\n";
+                    EmailSender sender = new EmailSender();
+                    sender.sendEmail(receiver_email, subject, message);
 
                     //report register success
                     Toast.makeText(getApplicationContext(), "Register Success!", Toast.LENGTH_LONG).show();
