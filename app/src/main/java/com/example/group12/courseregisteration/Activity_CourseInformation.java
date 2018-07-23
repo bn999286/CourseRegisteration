@@ -98,13 +98,14 @@ public class Activity_CourseInformation extends AppCompatActivity {
                 date = dataSnapshot.child("Date").getValue(String.class);
                 start = dataSnapshot.child("TimeStart").getValue(String.class);
                 end = dataSnapshot.child("TimeEnd").getValue(String.class);
-                enroll = dataSnapshot.child("Slots").getValue(String.class);
+                enroll = dataSnapshot.child("Slots").getValue(String.class)
 
                 max_enroll = dataSnapshot.child("MaxEnroll").getValue(String.class);
 
                 fee = dataSnapshot.child("Fee").getValue(String.class);
 
-                displayCourse(prof, name, location, date, start, end);
+
+                displayCourse(prof, name, location, date, start, end, enroll);
 
             }
             @Override
@@ -203,8 +204,15 @@ public class Activity_CourseInformation extends AppCompatActivity {
                             //decrease enroll number by 1
                             int enroll_num = Integer.parseInt(enroll);
                             enroll_num--;
-
                             myRef.child("Slots").setValue(Integer.toString(enroll_num));
+
+                            //get student email and course information and create a sender to send the email notification
+                            String receiver_email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                            String subject = course_id +"has been dropped";
+                            String message = "You have dropped the course " + course_id + ": " + name + "\n";
+                            EmailSender sender = new EmailSender();
+                            sender.sendEmail(receiver_email, subject, message);
+
 
                             Toast.makeText(getApplicationContext(), "Drop Success!", Toast.LENGTH_LONG).show();
                             startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
@@ -269,6 +277,13 @@ public class Activity_CourseInformation extends AppCompatActivity {
                     enroll_num++;
                     myRef.child("Slots").setValue(Integer.toString(enroll_num));
 
+                    //get student email and course information and create a sender to send the email notification
+                    String receiver_email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                    String subject = course_id +"has been registered";
+                    String message = "You have registered the course " + course_id + ": " + name + "\n";
+                    EmailSender sender = new EmailSender();
+                    sender.sendEmail(receiver_email, subject, message);
+
                     //report register success
                     Toast.makeText(getApplicationContext(), "Register Success!", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
@@ -290,9 +305,11 @@ public class Activity_CourseInformation extends AppCompatActivity {
      * @param date     the date
      * @param start    the start
      * @param end      the end
+     * @param prof      the professor name
+     * @param enroll      the enroll
      */
 //Display the course information
-    public void displayCourse(@NonNull String prof, String name, String location, String date, String start, String end) {
+    public void displayCourse(@NonNull String prof, String name, String location, String date, String start, String end, String enroll) {
 
         //Assign the textview
         CourseID = (TextView) findViewById(R.id.CourseID);

@@ -13,7 +13,9 @@ import com.google.firebase.auth.FirebaseAuth;
  * Basic functionality written by Peter and Xao
  * Cleaned up by Bin He and Chasteen
  */
+
 public class Activity_UserProfile extends AppCompatActivity {
+
 
     private Button buttonSignOut;
     private Button buttonOfferedCourses;
@@ -22,6 +24,7 @@ public class Activity_UserProfile extends AppCompatActivity {
     private Button buttonTuitionFee;
     private TextView showEmail;
     private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class Activity_UserProfile extends AppCompatActivity {
         changePassword = (Button)findViewById(R.id.buttonPassword);
         showEmail.setText(mAuth.getCurrentUser().getEmail());
 
+
         //password button
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +66,6 @@ public class Activity_UserProfile extends AppCompatActivity {
                 mAuth.signOut();
                 finish();
                 startActivity(new Intent(getApplicationContext(), Activity_SignIn.class));
-
             }
         });
 
@@ -83,6 +86,7 @@ public class Activity_UserProfile extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Activity_Schedule_Mon.class));
             }
         });
+
 
         //Tuition Fee button
         buttonTuitionFee.setOnClickListener(new View.OnClickListener() {
