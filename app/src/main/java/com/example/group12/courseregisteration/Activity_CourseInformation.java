@@ -57,7 +57,8 @@ public class Activity_CourseInformation extends AppCompatActivity {
     private String enroll;
     private String fee;
 
-
+    //maximum enrollment
+    private String max_enroll;
 
     //count the number of student's courses
     private int Student_course_count;
@@ -98,6 +99,8 @@ public class Activity_CourseInformation extends AppCompatActivity {
                 start = dataSnapshot.child("TimeStart").getValue(String.class);
                 end = dataSnapshot.child("TimeEnd").getValue(String.class);
                 enroll = dataSnapshot.child("Slots").getValue(String.class);
+
+                max_enroll = dataSnapshot.child("MaxEnroll").getValue(String.class);
 
                 fee = dataSnapshot.child("Fee").getValue(String.class);
 
@@ -246,7 +249,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
 
                 }
                 //if enrollment for this course is larger than 70
-                else if (Integer.parseInt(enroll) > 70) {
+                else if (Integer.parseInt(enroll) > Integer.parseInt(max_enroll)) {
                     Toast.makeText(getApplicationContext(), "No slots available", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), Activity_OfferedCourses.class));
                 }
@@ -350,7 +353,7 @@ public class Activity_CourseInformation extends AppCompatActivity {
         TimeEnd.append("  " + end);
 
         Enrollment.setText(wordEnroll);
-        Enrollment.append("  " + enroll + " of 70");
+        Enrollment.append("  " + enroll + " of " + max_enroll);
         Enrollment.setTextColor(Color.RED);
 
 
