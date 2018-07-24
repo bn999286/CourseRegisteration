@@ -29,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Activity_RegisterAccount extends AppCompatActivity {
 
     private Button btnSubmit;
+    private Button buttonBack;
     private EditText mName,mEmail,mPhoneNum, mpassword;
     private String userID;
     private FirebaseDatabase mFirebaseDatabase;
@@ -48,6 +49,7 @@ public class Activity_RegisterAccount extends AppCompatActivity {
         mEmail = (EditText) findViewById(R.id.etEmail);
         mPhoneNum = (EditText) findViewById(R.id.etPhone);
         mpassword = (EditText)findViewById(R.id.password);
+        buttonBack = (Button) findViewById(R.id.buttonBack);
 
 
         //checks to make sure user is not already existing in database
@@ -105,6 +107,17 @@ public class Activity_RegisterAccount extends AppCompatActivity {
                 }
             }
         });
+
+
+        //button back
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Activity_SignIn.class));
+            }
+        });
+
+
     }
 
 

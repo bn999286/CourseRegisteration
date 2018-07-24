@@ -42,7 +42,7 @@
         <activity android:name=".Activity_ResetPassword" />
         <activity android:name=".Activity_RegisterAccount" />
         <activity android:name=".Activity_ProfessorInformation"></activity>
-        <activity android:name=".profilePictureSelection" />
+        <activity android:name=".Activity_ProfileImage" />
 
 
 

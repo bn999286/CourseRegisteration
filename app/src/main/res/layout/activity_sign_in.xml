@@ -28,7 +28,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Email"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:textColorHint="@color/colorWhite"
         android:background ="@drawable/sign_in_field_background"
         android:paddingLeft="17dp"
@@ -50,7 +50,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Password"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:textColorHint="@color/colorWhite"
         android:background ="@drawable/sign_in_field_background"
         android:paddingLeft="17dp"
@@ -72,9 +72,10 @@
         android:background="@drawable/sign_in_button_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.625" />
+        app:layout_constraintVertical_bias="0.592" />
 
     <Button
         android:id="@+id/regButton"
@@ -87,8 +88,9 @@
         android:background="@drawable/register_button_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonSignIn"
-        app:layout_constraintVertical_bias="0.066" />
+        app:layout_constraintVertical_bias="0.072" />
 
 </android.support.constraint.ConstraintLayout>
