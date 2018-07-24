@@ -1,21 +1,36 @@
 package com.example.group12.courseregisteration;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 /**
  * The type Activity user profile.
  * Basic functionality written by Peter and Xao
  * Cleaned up by Bin He and Chasteen
  */
-
 public class Activity_UserProfile extends AppCompatActivity {
-
 
     private Button buttonSignOut;
     private Button buttonOfferedCourses;
@@ -24,12 +39,17 @@ public class Activity_UserProfile extends AppCompatActivity {
     private Button buttonTuitionFee;
     private TextView showEmail;
     private FirebaseAuth mAuth;
-
+    private Button toProfileSelection;
+    String fileName = "";
+    private StorageReference mStorageRef;
+    File localFile;
+    private ImageView mImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+        mImageView = findViewById(R.id.image_view);
 
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser() == null){
@@ -37,17 +57,59 @@ public class Activity_UserProfile extends AppCompatActivity {
             startActivity(new Intent(this,Activity_SignIn.class));
         }
 
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+
+        final String student_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference sRef = FirebaseDatabase.getInstance().getReference().child("Students").child("profPic");
+        sRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null)
+                {
+                    fileName = (String) dataSnapshot.getValue();
+
+                    mStorageRef.child(fileName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Picasso.with(getApplicationContext()).load(uri).into(mImageView);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(getApplicationContext(), "err, failure to load profile pic", Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
 
         buttonSignOut =(Button)findViewById(R.id.buttonSignOut);
         buttonOfferedCourses = (Button)findViewById(R.id.buttonOfferedCourse);
         buttonSchedule = (Button)findViewById(R.id.buttonSchedule);
         buttonTuitionFee = (Button)findViewById(R.id.buttonTuitionFee);
+        toProfileSelection = (Button)findViewById(R.id.button3);
 
-        //Show email
-        showEmail = (TextView)findViewById(R.id.textViewEmail);
+
         changePassword = (Button)findViewById(R.id.buttonPassword);
-        showEmail.setText(mAuth.getCurrentUser().getEmail());
 
+        //toProfileImageSelection
+        toProfileSelection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(getApplicationContext(), profilePictureSelection.class));
+            }
+        });
 
         //password button
         changePassword.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +128,7 @@ public class Activity_UserProfile extends AppCompatActivity {
                 mAuth.signOut();
                 finish();
                 startActivity(new Intent(getApplicationContext(), Activity_SignIn.class));
+
             }
         });
 
@@ -86,7 +149,6 @@ public class Activity_UserProfile extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Activity_Schedule_Mon.class));
             }
         });
-
 
         //Tuition Fee button
         buttonTuitionFee.setOnClickListener(new View.OnClickListener() {
