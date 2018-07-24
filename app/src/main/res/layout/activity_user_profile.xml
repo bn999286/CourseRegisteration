@@ -6,27 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".Activity_UserProfile">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="0dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/background_2" />
-
     <Button
         android:id="@+id/buttonSignOut"
-        android:layout_width="132dp"
-        android:layout_height="35dp"
+        android:layout_width="124dp"
+        android:layout_height="47dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/button_background"
         android:text="Sign out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,88 +21,92 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.908" />
 
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="match_parent"
+        android:layout_height="183dp"
+        android:layout_above="@id/progress_bar"
+        android:layout_marginBottom="12dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/buttonOfferedCourse"
         android:layout_width="184dp"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/button_background"
         android:text="Offered Courses"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.253" />
+        app:layout_constraintVertical_bias="0.469" />
 
     <Button
         android:id="@+id/buttonSchedule"
         android:layout_width="184dp"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/button_background"
         android:text="Schedule"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.397" />
+        app:layout_constraintVertical_bias="0.582" />
 
     <Button
         android:id="@+id/buttonTuitionFee"
         android:layout_width="185dp"
-        android:layout_height="45dp"
+        android:layout_height="47dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/button_background"
         android:text="Tution Fee"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.545" />
-
-    <TextView
-        android:id="@+id/textViewEmail"
-        android:layout_width="235dp"
-        android:layout_height="23dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="Email"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.091" />
+        app:layout_constraintVertical_bias="0.694" />
 
     <Button
         android:id="@+id/buttonPassword"
         android:layout_width="185dp"
-        android:layout_height="45dp"
+        android:layout_height="47dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/button_background"
         android:text="Reset Password"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.695" />
+        app:layout_constraintVertical_bias="0.8" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="185dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="99dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="12dp"
+        android:text="Set Profile Picture"
+        app:layout_constraintBottom_toTopOf="@+id/buttonOfferedCourse"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_view" />
 
 
 </android.support.constraint.ConstraintLayout>

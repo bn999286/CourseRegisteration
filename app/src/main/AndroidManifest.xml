@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
 
@@ -41,6 +42,7 @@
         <activity android:name=".Activity_ResetPassword" />
         <activity android:name=".Activity_RegisterAccount" />
         <activity android:name=".Activity_ProfessorInformation"></activity>
+        <activity android:name=".profilePictureSelection" />
 
 
 
