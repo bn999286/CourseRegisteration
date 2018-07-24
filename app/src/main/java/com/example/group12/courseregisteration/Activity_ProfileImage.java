@@ -30,35 +30,34 @@ import com.squareup.picasso.Picasso;
 /**
  * The type Profile picture selection.
  */
-public class profilePictureSelection extends AppCompatActivity {
+public class Activity_ProfileImage extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
     private Button mButtonChooseImage;
     private Button mButtonUpload;
+    private Button buttonBack;
+
     private TextView mTextviewShowUploads;
+
     private ImageView mImageView;
     private ProgressBar mProgressBar;
-
     private Uri mImageUri;
-
     private StorageReference mStorageRef;
-
     private StorageTask mUploadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_picture_selection);
+        setContentView(R.layout.activity_profile_image);
 
         mButtonChooseImage = findViewById(R.id.button_choose_image);
         mButtonUpload = findViewById(R.id.button_upload);
-        mTextviewShowUploads = findViewById(R.id.text_view_show_uploads);
+        buttonBack = findViewById(R.id.buttonBack);
         mImageView = findViewById(R.id.image_view);
         mProgressBar = findViewById(R.id.progress_bar);
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
-
 
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +71,7 @@ public class profilePictureSelection extends AppCompatActivity {
             public void onClick(View v) {
                 if (mUploadTask != null && mUploadTask.isInProgress())
                 {
-                    Toast.makeText(profilePictureSelection.this, "Upload In Progress", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Activity_ProfileImage.this, "Upload In Progress", Toast.LENGTH_LONG).show();
                 }
                 else{
                     uploadFile();
@@ -80,7 +79,8 @@ public class profilePictureSelection extends AppCompatActivity {
             }
         });
 
-        mTextviewShowUploads.setOnClickListener(new View.OnClickListener() {
+        //button back
+        buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),Activity_UserProfile.class));
@@ -104,7 +104,6 @@ public class profilePictureSelection extends AppCompatActivity {
                 && data != null && data.getData() != null)
         {
             mImageUri = data.getData();
-
             Picasso.with(this).load(mImageUri).into(mImageView);
         }
     }
@@ -117,12 +116,11 @@ public class profilePictureSelection extends AppCompatActivity {
     }
 
     private void uploadFile(){
+
         if (mImageUri != null)
         {
 
-
             StorageReference fileReference = mStorageRef.child(mImageUri.toString());
-
 
             Toast.makeText(getApplicationContext(), mImageUri.toString(), Toast.LENGTH_LONG).show();
 
@@ -137,7 +135,7 @@ public class profilePictureSelection extends AppCompatActivity {
                         }
                     }, 500);
 
-                    Toast.makeText(profilePictureSelection.this, "Upload Successful", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Activity_ProfileImage.this, "Upload Successful", Toast.LENGTH_LONG).show();
                     final String student_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     DatabaseReference sRef = FirebaseDatabase.getInstance().getReference().child("Students").child("profPic");
                     sRef.setValue(mImageUri.toString());
@@ -146,7 +144,7 @@ public class profilePictureSelection extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(profilePictureSelection.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(Activity_ProfileImage.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {

@@ -49,7 +49,8 @@ public class Activity_UserProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-        mImageView = findViewById(R.id.image_view);
+
+        mImageView = findViewById(R.id.imageViewProfileImage);
 
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser() == null){
@@ -97,7 +98,7 @@ public class Activity_UserProfile extends AppCompatActivity {
         buttonOfferedCourses = (Button)findViewById(R.id.buttonOfferedCourse);
         buttonSchedule = (Button)findViewById(R.id.buttonSchedule);
         buttonTuitionFee = (Button)findViewById(R.id.buttonTuitionFee);
-        toProfileSelection = (Button)findViewById(R.id.button3);
+        toProfileSelection = (Button)findViewById(R.id.buttonSetImage);
 
 
         changePassword = (Button)findViewById(R.id.buttonPassword);
@@ -107,7 +108,7 @@ public class Activity_UserProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-                startActivity(new Intent(getApplicationContext(), profilePictureSelection.class));
+                startActivity(new Intent(getApplicationContext(), Activity_ProfileImage.class));
             }
         });
 
