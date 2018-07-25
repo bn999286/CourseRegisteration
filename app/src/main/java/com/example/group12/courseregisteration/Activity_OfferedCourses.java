@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.graphics.drawable.Drawable;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -176,7 +177,8 @@ public class Activity_OfferedCourses extends AppCompatActivity {
                             if (course_id.equals(listview.getAdapter().getItem(i).toString())) {
 
                                 if(listview.getChildAt(i)!=null) {
-                                    listview.getChildAt(i).setBackgroundColor(Color.YELLOW);
+                                    Drawable image=(Drawable)getResources().getDrawable(R.drawable.registered);
+                                    listview.getChildAt(i).setBackground(image);
                                 }
 
                             }
