@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * The type Reset password, for resetting passwords
@@ -49,14 +50,21 @@ public class Activity_ResetPassword extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 user.updatePassword(editPassword.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<Void>() {
+
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+
                         if (task.isSuccessful()){
+
                             Toast.makeText(getApplicationContext(), "Password successfully changed",Toast.LENGTH_SHORT).show();
+
+                            DatabaseReference uRef = FirebaseDatabase.getInstance().getReference("users/"+ user.getUid());
+                            uRef.child("password").setValue(editPassword.getText().toString());
+
                         }
-                        else
-                        {
+                        else {
                             Toast.makeText(getApplicationContext(), "Error: Password was not changed",Toast.LENGTH_SHORT).show();
                         }
                     }
