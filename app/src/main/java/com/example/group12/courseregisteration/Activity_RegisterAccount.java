@@ -90,7 +90,12 @@ public class Activity_RegisterAccount extends AppCompatActivity {
                                         userID = user.getUid();
 
                                         UserInformation userInformation = new UserInformation(email,name,phoneNum, password);
-                                        myRef.child("users").child(userID).setValue(userInformation);
+
+                                        myRef.child("Students").child(userID).setValue(userInformation);
+
+                                        myRef.child("Students").child(userID).child("profPic").
+                                                setValue("content://com.android.providers.downloads.documents/document/raw%3A%2Fstorage%2Femulated%2F0%2FDownload%2FDEFAULT.jpeg");
+
                                         toastMessage(String.valueOf(R.string.regMessage));
                                         finish();
                                         startActivity(new Intent(getApplicationContext(), Activity_UserProfile.class));
