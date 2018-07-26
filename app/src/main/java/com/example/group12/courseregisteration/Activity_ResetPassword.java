@@ -60,7 +60,7 @@ public class Activity_ResetPassword extends AppCompatActivity {
 
                             Toast.makeText(getApplicationContext(), "Password successfully changed",Toast.LENGTH_SHORT).show();
 
-                            DatabaseReference uRef = FirebaseDatabase.getInstance().getReference("users/"+ user.getUid());
+                            DatabaseReference uRef = FirebaseDatabase.getInstance().getReference("Students/"+ user.getUid());
                             uRef.child("password").setValue(editPassword.getText().toString());
 
                         }
