@@ -38,8 +38,6 @@ public class Activity_ProfileImage extends AppCompatActivity {
     private Button mButtonUpload;
     private Button buttonBack;
 
-    private TextView mTextviewShowUploads;
-
     private ImageView mImageView;
     private ProgressBar mProgressBar;
     private Uri mImageUri;
@@ -108,12 +106,6 @@ public class Activity_ProfileImage extends AppCompatActivity {
         }
     }
 
-    private String getFileExtension(Uri uri)
-    {
-        ContentResolver cR = getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(cR.getType(uri));
-    }
 
     private void uploadFile(){
 
@@ -136,9 +128,10 @@ public class Activity_ProfileImage extends AppCompatActivity {
                     }, 500);
 
                     Toast.makeText(Activity_ProfileImage.this, "Upload Successful", Toast.LENGTH_LONG).show();
+
                     final String student_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    DatabaseReference sRef = FirebaseDatabase.getInstance().getReference().child("Students").child("profPic");
-                    sRef.setValue(mImageUri.toString());
+                    DatabaseReference sRef = FirebaseDatabase.getInstance().getReference("Students/"+ student_id);
+                    sRef.child("profPic").setValue(mImageUri.toString());
 
                 }
             }).addOnFailureListener(new OnFailureListener() {

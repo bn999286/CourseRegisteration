@@ -61,7 +61,7 @@ public class Activity_UserProfile extends AppCompatActivity {
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
         final String student_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference sRef = FirebaseDatabase.getInstance().getReference().child("Students").child("profPic");
+        DatabaseReference sRef = FirebaseDatabase.getInstance().getReference("Students/"+ student_id+ "/profPic");
         sRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
